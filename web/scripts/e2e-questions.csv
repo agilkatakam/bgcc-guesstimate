@@ -1,0 +1,5 @@
+kind,practice,section,text,unit,answer,low,high,weight,seconds,reveal_seconds,note
+q,yes,,"Practice: how many?",things,1500,,,1,6,3,
+break,,,"Get ready",,,,,,5,0,
+q,,Easy,"Scored: how many?",things,80,,,1,6,3,
+q,,Hard,"Scored 2",things,15,,,3,6,3,

@@ -1,0 +1,5 @@
+kind,practice,section,text,unit,answer,low,high,weight,seconds,reveal_seconds,note
+q,,Easy,"Load test Q1",things,500,,,1,25,8,
+break,,,"Get ready",,,,,,8,0,
+q,,Medium,"Load test Q2",things,2000,,,2,25,8,
+q,,Hard,"Load test Q3",things,200,,,3,25,8,

@@ -1,0 +1,19 @@
+kind,practice,section,text,unit,answer,low,high,weight,seconds,reveal_seconds,note
+q,yes,Practice,"Practice (doesn't count): how many acres is the BITS Goa campus?",acres,180,,,1,45,12,"Practice round: it doesn't count. The campus is about 180 acres."
+q,,Easy,"How many chairs are there in B-Dome?",chairs,1600,,,1,90,15,"2 sides × (13 classrooms × 50 + 50 faculty rooms × 3) = 1,600"
+q,,Easy,"How many airports are there in India? (operational airports of any kind; not heliports or purely military airfields)",airports,165,,,1,90,15,"~34 international + about 8 per large state, 4 per medium state, a few in small states ≈ 165"
+q,,Easy,"How many tennis rackets, laid flat, would it take to cover a tennis court? (full doubles court)",rackets,1410,,,1,90,15,"Court 23.77 × 10.97 m ≈ 261 m² ÷ racket 68.5 × 27 cm ≈ 0.185 m² ≈ 1,410"
+q,,Easy,"How many chips are there in a standard Pringles can? (149 g Original)",chips,80,,,1,90,15,"~150 g ÷ ~1.75 g per chip ≈ 85, minus broken bits and seasoning ≈ 80"
+q,,Easy,"How many kilometres does a BITS Goa student cover in a day?",km,5.5,,,1,90,15,
+q,,Easy,"What is the average daily screen time of a BITS Goa student?",hours,3.4,,,1,90,15,"4,000 students split into OTT watchers, reel watchers and casual users, peak and off-peak hours ≈ 3.4 h"
+break,,,"Medium round next: 5 questions, 2 minutes each, worth 2× points.",,,,,,20,0,
+q,,Medium,"How many goals were scored in total at the 2026 FIFA World Cup? (penalty shootouts don't count)",goals,308,,,2,120,15,"104 matches × ~3 goals ≈ 312. Actual: 308, a World Cup record"
+q,,Medium,"How much money (in rupees) does FK make on a regular Thursday with no evals?",rupees,45000,,,2,120,15,
+q,,Medium,"How many languages in the world are official in at least one country? (count each language once)",languages,100,,,2,120,15,"About 100 of the world's 6,000 to 7,000 languages have official status somewhere"
+q,,Medium,"How many flights land at Mopa (Manohar International Airport, Goa) in one day (24 hours)?",flights,50,,,2,120,15,"~100 take-offs and landings a day, so about 50 landings"
+q,,Medium,"How many people visit the BITS Goa library on a regular weekday (no tests or exams)?",people,580,,,2,120,15,"~4,500 students × 12% + ~40 faculty and staff ≈ 580"
+break,,,"Hard round next: 4 questions, 3 minutes each, worth 3× points.",,,,,,20,0,
+q,,Hard,"How many metro stations are there in India?",stations,770,,,3,180,15,
+q,,Hard,"How many McDonald's restaurants are there in India?",restaurants,800,,,3,180,15,"Metros ~360 + 40 tier-2 cities × 7 + 60 smaller cities × 2 + highways and airports ≈ 800"
+q,,Hard,"How many Spree passes are there in total? (BITS Goa students + other colleges)",passes,4000,,,3,180,15,"40 colleges × 50 = 2,000 external + 50% of 4,000 students = 2,000 internal"
+q,,Hard,"How many cups of coffee does IC sell in a day?",cups,300,,,3,180,15,

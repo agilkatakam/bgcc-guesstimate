@@ -1,0 +1,831 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>The Vardhan Case: Exhibits</title>
+<!-- Print set of the case file and the twelve exhibits. Text must match game/cards.md and game/case-file.md.
+     Render: python3 tools/build_exhibits.py (also checks every fact in cards.md appears on the right page). -->
+<style>
+@page { size: A4; margin: 5mm; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #1a1a1a; font-size: 9.6pt; line-height: 1.38; }
+.page { --z: 1; zoom: var(--z); width: calc(200mm / var(--z)); height: calc(287mm / var(--z)); padding: 12mm 14mm 14mm; position: relative; overflow: hidden; background: #fff; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+.tag { position: absolute; top: 2mm; right: 14mm; background: #1c1c1c; color: #fff; font: bold 8.5pt Arial; padding: 3px 11px 5px; letter-spacing: 1.2px; }
+.tag small { font-weight: normal; opacity: .75; letter-spacing: .5px; }
+.foot { position: absolute; bottom: 7mm; left: 14mm; right: 14mm; border-top: 1px solid #999; padding-top: 3px; font-size: 6.8pt; color: #555; display: flex; justify-content: space-between; }
+.mono { color: #111; font-family: "Courier New", Courier, monospace; }
+.hand { font-family: "Bradley Hand", "Noteworthy", cursive; color: #1d3c8f; font-size: 11.5pt; line-height: 1.3; }
+.pencil .n { font-family: Arial, sans-serif; font-size: .9em; }
+.pencil { font-family: "Noteworthy", "Bradley Hand", cursive; color: #4a4a4a; font-size: 9.6pt; line-height: 1.45; }
+.stamp { position: absolute; font-weight: bold; border: 2.5px solid; border-radius: 5px; padding: 4px 10px; text-align: center; opacity: .72; letter-spacing: 1px; font-family: Arial; }
+.stamp small { display: block; font-size: 6.8pt; letter-spacing: .5px; }
+.round { border-radius: 50%; border-style: double; border-width: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+table { width: 100%; border-collapse: collapse; }
+td, th { border: 1px solid #aaa; padding: 3.5px 6px; vertical-align: top; text-align: left; }
+th { background: #f1f1f1; font-size: 7.9pt; font-weight: bold; }
+.lbl { font-size: 7.6pt; color: #555; width: 24%; background: #fafafa; }
+.sec { margin-top: 8px; border: 1px solid #777; }
+.sec > .sh { font-weight: bold; font-size: 8.3pt; padding: 3px 7px; border-bottom: 1px solid #777; text-transform: uppercase; letter-spacing: .4px; }
+.sec table { border: none; }
+.sec table tr:first-child td, .sec table tr:first-child th { border-top: none; }
+.sec table td:first-child, .sec table th:first-child { border-left: none; }
+.sec table td:last-child, .sec table th:last-child { border-right: none; }
+.sec table tr:last-child td { border-bottom: none; }
+.note { padding: 5px 8px; }
+.note p { margin: 3px 0; }
+ul.f { margin: 3px 0; padding-left: 16px; } ul.f li { margin: 2px 0; }
+ol.f { margin: 3px 0; padding-left: 18px; } ol.f li { margin: 2.5px 0; }
+.sig { display: flex; justify-content: space-between; margin-top: 14px; font-size: 7.8pt; }
+.sig div { width: 30%; border-top: 1px solid #333; padding-top: 2px; }
+h1, h2 { margin: 0; }
+
+/* ---------- Case file ---------- */
+.cf { font-family: Georgia, "Times New Roman", serif; font-size: 10pt; }
+.cf .head { display: flex; align-items: center; gap: 12px; border-bottom: 3px double #1f2a44; padding-bottom: 7px; }
+.cf .badge { width: 50px; height: 50px; border-radius: 50%; border: 2.5px solid #1f2a44; color: #1f2a44; display: flex; align-items: center; justify-content: center; font: bold 8pt Arial; text-align: center; line-height: 1.1; }
+.cf .head b { font: bold 15pt Georgia; color: #1f2a44; letter-spacing: .5px; display: block; }
+.cf .head span { font: 8pt Arial; color: #555; }
+.cf h1 { font: bold 22pt Georgia; letter-spacing: 3px; margin: 12px 0 2px; color: #1a1a1a; }
+.cf .sub { font: italic 10pt Georgia; color: #555; margin-bottom: 8px; }
+.cf h2 { font: bold 10pt Arial; letter-spacing: 1.2px; text-transform: uppercase; color: #1f2a44; border-bottom: 1px solid #1f2a44; padding-bottom: 2px; margin: 12px 0 5px; }
+.cf p { margin: 4px 0; }
+.cf ul { margin: 3px 0; padding-left: 18px; } .cf li { margin: 2px 0; }
+.cf table { font: 8.8pt Arial; margin-top: 4px; }
+.cf th { background: #1f2a44; color: #fff; border-color: #1f2a44; }
+.cf .tl td:first-child { width: 22%; font-weight: bold; white-space: nowrap; }
+.cf .ans { border: 1.5px solid #1f2a44; padding: 6px 10px; background: #f6f7fa; }
+.cf .ans ol { margin: 3px 0 4px; padding-left: 20px; }
+.cf .gl p { margin: 3px 0; font-size: 9.3pt; }
+.conf-red { color: #a51b1b; font: bold 7.5pt Arial; letter-spacing: 1.5px; }
+
+/* ---------- Exhibit 1: hospital ---------- */
+.hosp .head { display: flex; align-items: center; gap: 12px; border-bottom: 2.5px solid #0f5a3c; padding-bottom: 6px; }
+.hosp .cross { width: 44px; height: 44px; position: relative; flex: none; }
+.hosp .cross:before, .hosp .cross:after { content: ""; position: absolute; background: #0f5a3c; }
+.hosp .cross:before { left: 15px; top: 2px; width: 14px; height: 40px; } .hosp .cross:after { top: 15px; left: 2px; width: 40px; height: 14px; }
+.hosp .head b { font: bold 14.5pt Georgia; color: #0f5a3c; display: block; }
+.hosp .head span { font-size: 7.6pt; color: #444; }
+.hosp .t { margin: 9px 0 4px; display: flex; justify-content: space-between; align-items: flex-end; }
+.hosp .t h1 { font-size: 13pt; letter-spacing: .6px; }
+.hosp .sh { background: #e1efe8; }
+.hosp .op { margin-top: 9px; border: 2px solid #0f5a3c; padding: 6px 9px; background: #f6fbf8; }
+.police .head { display: flex; align-items: center; gap: 12px; border-bottom: 3px solid #1b2f6b; padding-bottom: 6px; }
+.police .star { width: 46px; height: 46px; border-radius: 50%; background: #1b2f6b; color: #f3c64b; font-size: 22pt; display: flex; align-items: center; justify-content: center; flex: none; }
+.police .head b { font: bold 14pt Georgia; color: #1b2f6b; display: block; }
+.police .head span { font-size: 7.6pt; color: #444; }
+.memo { font-family: Georgia, serif; font-size: 10.2pt; line-height: 1.5; }
+.memo .mh td { border: none; padding: 1px 0; font: 9pt Arial; } .memo .mh td:first-child { width: 18%; color: #555; }
+.memo h1 { font: bold 11.5pt Arial; letter-spacing: .5px; margin: 10px 0 6px; text-transform: uppercase; }
+.memo ol { padding-left: 22px; } .memo ol li { margin: 5px 0; }
+.memo .gate { margin: 8px 0 4px; }
+.memo .gate td, .memo .gate th { font: 8.8pt Arial; }
+
+/* ---------- Exhibit 2: crime branch ---------- */
+.cb .ledger { margin-top: 8px; border: 1px solid #8a7b5a; background: #fbf6e9; padding: 7px 10px 9px; position: relative; }
+.cb .ledger .lh { font: bold 8pt Arial; letter-spacing: 1px; color: #6b5a36; text-transform: uppercase; margin-bottom: 4px; }
+.cb .ledger table td { border: none; border-bottom: 1px solid #d9cba6; padding: 3px 4px; font-size: 9.2pt; }
+.cb .ledger .lbl { background: transparent; color: #6b5a36; width: 26%; }
+.cb .torn { margin-top: 6px; border: 1.5px dashed #9a8a66; height: 15mm; display: flex; align-items: center; justify-content: center; color: #8a7a56; font: italic 8.5pt Georgia; background: repeating-linear-gradient(45deg, #fbf6e9, #fbf6e9 6px, #f1e8d0 6px, #f1e8d0 12px); }
+.cb .sh { background: #e6e9f2; }
+.cb .cdr td, .cb .cdr th { font-size: 8.6pt; }
+
+/* ---------- Exhibit 3: insurer ---------- */
+.ins .head { display: flex; align-items: center; border-bottom: 2.5px solid #0b4f6c; padding-bottom: 5px; }
+.ins .logo { width: 46px; height: 46px; border-radius: 50%; background: #0b4f6c; color: #fff; font: bold 17pt Georgia, serif; display: flex; align-items: center; justify-content: center; margin-right: 10px; position: relative; flex: none; }
+.ins .logo:after { content: ""; position: absolute; width: 46px; height: 12px; bottom: 9px; border-top: 2px solid #f2a33a; border-radius: 50% 50% 0 0; }
+.ins .co { flex: 1; } .ins .co b { font: bold 15pt Georgia, serif; color: #0b4f6c; }
+.ins .co div, .ins .hr { font-size: 7.2pt; color: #444; line-height: 1.35; } .ins .hr { text-align: right; }
+.ins .title { margin: 7px 0 2px; display: flex; justify-content: space-between; align-items: flex-end; }
+.ins .title h1 { font-size: 12pt; letter-spacing: .5px; }
+.ins .title .ref { font-size: 8pt; text-align: right; }
+.ins .sh { background: #dde8ee; }
+.ins .box { display: inline-block; width: 10px; height: 10px; border: 1px solid #333; margin: 0 2px 0 7px; vertical-align: -1px; text-align: center; font-size: 8pt; line-height: 9px; font-weight: bold; }
+
+/* ---------- Exhibit 4: case diary ---------- */
+.diary .ruled { margin-top: 8px; border: 1.5px solid #1b2f6b; }
+.diary .ruled table td { border: none; border-bottom: 1px solid #c9d0e3; padding: 4px 7px; font-family: Georgia, serif; font-size: 9.4pt; line-height: 1.42; }
+.diary .ruled table td.tm { width: 15%; border-right: 2px solid #c0392b; font: bold 9pt "Courier New", monospace; color: #1b2f6b; white-space: nowrap; }
+.diary .ruled table tr:nth-child(odd) td { background: #fbfcff; }
+.diary .ruled ol { margin: 3px 0; padding-left: 18px; } .diary .ruled ol li { margin: 3px 0; }
+.diary .dh { display: flex; justify-content: space-between; font: 8.4pt Arial; margin-top: 7px; }
+
+/* ---------- Exhibit 5: clinic ---------- */
+.clinic .head { text-align: center; border-bottom: 1.5px solid #6b2d5c; padding-bottom: 6px; }
+.clinic .head b { font: 19pt Didot, Georgia, serif; color: #6b2d5c; letter-spacing: 1px; display: block; }
+.clinic .head span { font: 8pt Georgia; color: #555; letter-spacing: 1px; }
+.clinic .rx { position: absolute; top: 16mm; left: 16mm; font: italic bold 26pt Georgia; color: #6b2d5c; opacity: .8; }
+.clinic .card { margin-top: 10px; border: 1px solid #b89aae; background: #fdf9fc; }
+.clinic .card .lbl { background: #f6eef4; color: #6b2d5c; }
+.clinic .notes { margin-top: 10px; border: 1px solid #b89aae; padding: 8px 12px 10px; background: #fffef8 repeating-linear-gradient(#fffef8, #fffef8 23px, #dfe6f2 23px, #dfe6f2 24px); }
+.clinic .notes .nh { font: bold 8pt Arial; letter-spacing: 1px; color: #6b2d5c; text-transform: uppercase; margin-bottom: 4px; }
+.clinic .notes p { margin: 0 0 7px; }
+.clinic .notes .d { font-weight: bold; }
+
+/* ---------- Exhibit 6: CDR ---------- */
+.cdr6 { font-family: "Courier New", monospace; font-size: 9.3pt; }
+.cdr6 .head { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #e05a00; padding-bottom: 5px; font-family: Arial; }
+.cdr6 .head b { font: bold 17pt Arial; color: #e05a00; letter-spacing: -.3px; }
+.cdr6 .head b i { color: #333; font-style: normal; font-weight: normal; }
+.cdr6 .head span { font-size: 7.4pt; color: #444; text-align: right; }
+.cdr6 h1 { font: bold 11pt "Courier New"; margin: 9px 0 5px; letter-spacing: .5px; }
+.cdr6 .kv td { border: none; padding: 1px 0; } .cdr6 .kv td:first-child { width: 28%; color: #555; }
+.cdr6 .grid { margin-top: 8px; } .cdr6 .grid th { background: #eee; font: bold 8.6pt "Courier New"; } .cdr6 .grid td { font-size: 8.9pt; border-color: #999; } .cdr6 .grid td:first-child { white-space: nowrap; }
+.cdr6 .cert { margin-top: 8px; font-size: 8.4pt; border: 1px solid #999; padding: 5px 8px; }
+.cdr6 .pnotes { margin-top: 12px; border-left: 3px solid #999; padding: 3px 0 3px 12px;  }
+.cdr6 .pnotes .ph { font: bold 7.6pt Arial; letter-spacing: 1px; color: #666; text-transform: uppercase; }
+.cdr6 .pnotes ul { margin: 2px 0; padding-left: 16px; } .cdr6 .pnotes li { margin: 3px 0; }
+
+/* ---------- Exhibit 7: lender ---------- */
+.sethi { background: #fff; }
+.sethi .band { margin: -12mm -14mm 0; padding: 9mm 14mm 6mm; background: #15171c; color: #e9e3d4; display: flex; justify-content: space-between; align-items: flex-end; }
+.sethi .band b { font: 21pt Didot, Georgia, serif; letter-spacing: 4px; color: #d6b46a; }
+.sethi .band span { font: 7.5pt Arial; letter-spacing: 1.5px; text-transform: uppercase; text-align: right; color: #bdb6a6; }
+.sethi h1 { font: bold 11pt Arial; letter-spacing: 1.5px; text-transform: uppercase; margin: 11px 0 2px; }
+.sethi .sc { font: bold 7.5pt Arial; letter-spacing: 2px; color: #a51b1b; }
+.sethi .facility { margin-top: 8px; } .sethi .facility .lbl { background: #f5f1e7; color: #6d5a2c; width: 20%; }
+.sethi h2 { font: bold 8.4pt Arial; letter-spacing: 1.2px; text-transform: uppercase; color: #6d5a2c; border-bottom: 1px solid #d6b46a; padding-bottom: 2px; margin: 11px 0 4px; }
+.sethi p { margin: 3px 0; }
+.sethi .log td { font-size: 9pt; border-color: #ddd; } .sethi .log td:first-child { width: 16%; white-space: nowrap; font-weight: bold; }
+.sethi .chk td:first-child { width: 48%; white-space: normal; font-weight: normal; color: #444; }
+.sethi .wm { position: absolute; top: 120mm; left: 20mm; font: bold 64pt Arial; color: rgba(165,27,27,.06); transform: rotate(-28deg); letter-spacing: 6px; }
+
+/* ---------- Exhibit 8: magistrate ---------- */
+.mag { font-family: "Times New Roman", Times, serif; font-size: 11pt; line-height: 1.45; }
+.mag .head { text-align: center; border-bottom: 1.5px solid #000; padding-bottom: 6px; }
+.mag .head .gov { font: 9pt "Times New Roman"; letter-spacing: 2px; text-transform: uppercase; }
+.mag .head b { font: bold 15pt "Times New Roman"; display: block; letter-spacing: .5px; }
+.mag .no { display: flex; justify-content: space-between; margin: 8px 0; font-size: 10pt; }
+.mag h1 { text-align: center; font: bold 12pt "Times New Roman"; letter-spacing: 3px; text-decoration: underline; margin: 6px 0 8px; }
+.mag p { margin: 5px 0; text-align: justify; }
+.mag ol { list-style: none; padding-left: 0; } .mag ol li { margin: 6px 0; padding-left: 28px; text-indent: -28px; text-align: justify; }
+.mag .order { margin-top: 10px; border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 6px 0; }
+.mag .margin { position: absolute; left: 5mm; top: 150mm; width: 30mm; transform: rotate(-3deg); font-size: 10pt; }
+.mag .signblk { margin-top: 18px; text-align: right; font-size: 10pt; }
+
+/* ---------- Exhibit 9: airport ---------- */
+.air .head { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #0d2a5c; padding-bottom: 6px; }
+.air .head b { font: bold 14pt Arial; color: #0d2a5c; display: block; }
+.air .head span { font-size: 7.6pt; color: #444; }
+.air .plane { font: 26pt Arial; color: #0d2a5c; }
+.air .banner { margin-top: 8px; background: #b3122a; color: #fff; font: bold 13pt Arial; letter-spacing: 4px; padding: 5px 10px; display: flex; justify-content: space-between; }
+.air .banner span { font: bold 8pt Arial; letter-spacing: 1px; align-self: center; }
+.air .grid th { background: #0d2a5c; color: #fff; border-color: #0d2a5c; } .air .grid td { font-size: 9pt; }
+.air .sh { background: #e3e8f2; }
+.air .action { margin-top: 10px; border: 2.5px solid #b3122a; padding: 6px 10px; font-weight: bold; }
+
+/* ---------- Exhibit 6: CDR (additions) ---------- */
+.cdr6 .status { margin-top: 6px; font-size: 8.8pt; }
+.cdr6 .kv td:first-child { width: 30%; padding-right: 8px; }
+
+/* ---------- Exhibit 10: cyber crime examination report ---------- */
+.cyb .head { border-bottom-color: #0e5e6f; }
+.cyb .star { background: #0e5e6f; }
+.cyb .head b { color: #0e5e6f; }
+.cyb .t { margin: 8px 0 3px; display: flex; justify-content: space-between; align-items: flex-end; }
+.cyb .t h1 { font-size: 12.5pt; letter-spacing: .6px; }
+.cyb .t div { font-size: 8pt; text-align: right; line-height: 1.3; }
+.cyb .ref { font-size: 8.6pt; margin: 4px 0 2px; color: #333; }
+.cyb .sec { border-color: #0e5e6f; }
+.cyb .sh { background: #dcecef; color: #0b4652; border-bottom-color: #0e5e6f; text-transform: none; letter-spacing: .2px; }
+.cyb .sh small { font-weight: normal; color: #3c5d64; }
+.cyb .ex td { font-size: 9pt; } .cyb .ex td.tm { width: 19%; white-space: nowrap; font: bold 8.6pt "Courier New", monospace; color: #0b4652; }
+.cyb .bub { display: block; margin: 3px 0 2px; padding: 4px 8px; background: #e7f6e9; border: 1px solid #b9dcbf; border-radius: 8px 8px 8px 2px; font-size: 9pt; }
+.cyb .bub.sms { background: #eef1f6; border-color: #c4ccda; }
+.cyb .meta { font-size: 7.8pt; color: #555; }
+.cyb .ofnote { margin-top: 9px; border: 2px solid #c25b00; background: #fff6ec; padding: 6px 10px; }
+.cyb .ofnote b:first-child { color: #c25b00; }
+.cyb .hash { font: 6.8pt "Courier New", monospace; color: #666; margin-top: 6px; }
+
+/* ---------- Exhibit 12: police control room log ---------- */
+.ctl { font-size: 9.3pt; }
+.ctl .band { margin: -12mm -14mm 0; padding: 7mm 14mm 4mm; background: #5a1f1f; color: #f6e9d0; display: flex; justify-content: space-between; align-items: flex-end; }
+.ctl .band b { font: bold 15pt Arial; letter-spacing: 1px; display: block; }
+.ctl .band span { font: 7.6pt Arial; letter-spacing: .6px; opacity: .85; }
+.ctl .band .d112 { font: bold 22pt Arial; color: #f3c64b; letter-spacing: 1px; text-align: right; line-height: 1; }
+.ctl .band .d112 small { display: block; font: 6.8pt Arial; letter-spacing: 1.5px; color: #f6e9d0; }
+.ctl h1 { font: bold 11.5pt Arial; letter-spacing: 2px; margin: 9px 0 3px; color: #5a1f1f; }
+.ctl .shift { display: flex; gap: 0; margin: 4px 0 6px; font-size: 8pt; }
+.ctl .shift div { border: 1px solid #a58c6a; padding: 2px 7px; margin-right: -1px; background: #fbf6ec; }
+.ctl .shift b { color: #5a1f1f; }
+.ctl .reg { border: 1.5px solid #5a1f1f; }
+.ctl .reg th { background: #efe4d2; color: #5a1f1f; border-color: #c8b28f; font-size: 7.8pt; text-transform: uppercase; letter-spacing: .5px; }
+.ctl .reg td { border: none; border-bottom: 1px solid #d8c8ac; font-family: "Courier New", monospace; font-size: 8.8pt; line-height: 1.35; }
+.ctl .reg td.tm { width: 15%; white-space: nowrap; font-weight: bold; border-right: 1.5px solid #b23a3a; }
+.ctl .reg td.ac { width: 13%; font: 7.6pt Arial; color: #555; border-left: 1px solid #d8c8ac; }
+.ctl .trace { margin-top: 10px; border: 1.5px solid #2b4a8a; background: #f7f9ff; }
+.ctl .trace .th { font: bold 8.3pt Arial; color: #fff; background: #2b4a8a; padding: 3px 8px; letter-spacing: .6px; text-transform: uppercase; }
+.ctl .trace .tr { padding: 5px 9px; border-bottom: 1px dashed #9fb0d6; }
+.ctl .trace .tr:last-child { border-bottom: none; }
+.ctl .trace .q { font: bold 8.8pt Arial; }
+.ctl .trace .a { font-family: "Courier New", monospace; font-size: 8.8pt; color: #1d2f63; margin-top: 2px; }
+.ctl .remark { margin-top: 10px; padding: 4px 10px; border-left: 3px solid #1d3c8f; }
+.ctl .remark .rh { font: bold 7.6pt Arial; letter-spacing: 1px; color: #666; text-transform: uppercase; }
+
+
+/* ---------- D pages: Exhibit 2 (crime branch ledger, multi-entry) ---------- */
+.cb .ledger table.lg td, .cb .ledger table.lg th { border: none; border-bottom: 1px solid #d9cba6; padding: 3px 4px; font-size: 8.4pt; vertical-align: top; }
+.cb .ledger table.lg th { background: transparent; color: #6b5a36; font-size: 7.2pt; text-transform: uppercase; letter-spacing: .4px; border-bottom: 1.5px solid #8a7b5a; }
+.cb .ledger table.lg td.m { white-space: nowrap; color: #6b5a36; }
+.cb .ledger table.lg td.fee { white-space: nowrap; }
+.cb .ledger .mg { margin-top: 5px; display: flex; gap: 10px; align-items: stretch; }
+.cb .ledger .mg .pencil { flex: 1; font-size: 9.4pt; }
+.cb .ledger .mg .torn { flex: 0 0 46%; margin-top: 0; height: auto; min-height: 12mm; }
+.cb .assess { margin-top: 9px; border: 2px solid #1b2f6b; background: #f4f6fb; padding: 6px 10px; }
+
+/* ---------- D pages: Exhibit 9 (airport, passenger slips) ---------- */
+.air .slips { display: flex; gap: 6px; margin-top: 6px; }
+.air .slip { flex: 1; border: 1px solid #0d2a5c; border-left: 6px solid #0d2a5c; padding: 5px 7px 6px; font-size: 8.7pt; position: relative; background: #f7f9fd; }
+.air .slip.stop { border-left-color: #b3122a; }
+.air .slip.ok { border-left-color: #2e7d4f; background: #f8fbf9; color: #333; }
+.air .slip .no { font: bold 7pt Arial; color: #666; letter-spacing: 1px; }
+.air .slip .nm { font: bold 10pt "Courier New", monospace; margin: 1px 0 3px; }
+.air .slip p { margin: 2px 0; }
+.air .slip .res { margin-top: 4px; font: bold 8.5pt Arial; letter-spacing: 2px; }
+.air .slip.stop .res { color: #b3122a; } .air .slip.ok .res { color: #2e7d4f; }
+.air .duty { margin-top: 9px; border-left: 3px solid #1d3c8f; padding: 2px 0 2px 10px; }
+.air .duty .dl { font: bold 7.4pt Arial; letter-spacing: 1px; color: #555; text-transform: uppercase; }
+
+/* ---------- D pages: Exhibit 11 (Mapusa travel agency seizure) ---------- */
+.agency .head { display: flex; align-items: center; gap: 12px; border-bottom: 3px solid #1b2f6b; padding-bottom: 6px; }
+.agency .t { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 7px; }
+.agency .t h1 { font-size: 12pt; letter-spacing: .5px; }
+.agency .intro { margin: 5px 0 2px; }
+.agency .item { font: bold 8.2pt Arial; text-transform: uppercase; letter-spacing: .5px; color: #1b2f6b; margin: 8px 0 3px; }
+.agency .day { border: 1px solid #9aa7c4; background: #fffef8; }
+.agency .day .dbh { display: flex; justify-content: space-between; background: #283a6e; color: #fff; font: bold 8pt Arial; letter-spacing: 1px; padding: 3px 7px; }
+.agency .day table td, .agency .day table th { border: none; border-bottom: 1px solid #cfd8ea; border-right: 1px solid #e6c9c9; padding: 3px 5px; font-size: 8.3pt; }
+.agency .day table th { background: #eef1f8; font-size: 7.2pt; text-transform: uppercase; letter-spacing: .3px; }
+.agency .day table td.hand { font-size: 9.2pt; line-height: 1.2; }
+.agency .day table td:first-child { white-space: nowrap; }
+.agency .day table td:last-child, .agency .day table th:last-child { border-right: none; }
+.agency .pair { display: flex; gap: 8px; align-items: stretch; }
+.agency .rcpt { border: 1px dashed #777; padding: 5px 8px 6px; background: #f6f8ff; font-size: 8.5pt; position: relative; }
+.agency .rcpt .rh { display: flex; justify-content: space-between; font: bold 8pt Arial; border-bottom: 1px solid #999; padding-bottom: 2px; margin-bottom: 3px; }
+.agency .rcpt .carbon { color: #24409a; font-family: "Bradley Hand", "Noteworthy", cursive; font-size: 10pt; line-height: 1.25; }
+.agency .pp { flex: 1; border: 1px solid #888; background: #e9e9e6; padding: 6px 8px; display: flex; gap: 8px; font-size: 8.2pt; }
+.agency .pp .ph { flex: 0 0 22mm; background: repeating-linear-gradient(0deg, #2b2b2b, #2b2b2b 2px, #3a3a3a 2px, #3a3a3a 4px); color: #bbb; font: italic 6.8pt Arial; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 3px; text-align: center; }
+.agency .pp .bio { flex: 1; }
+.agency .pp .bio .rep { font: bold 7.2pt Arial; letter-spacing: .3px; margin-bottom: 2px; white-space: nowrap; }
+.agency .pp .bio table td { border: none; padding: 0 3px 1px 0; font-size: 8pt; } .agency .pp .bio table td:first-child { color: #555; width: 38%; font-size: 7.2pt; }
+.agency .pp .mrz { font: 7.4pt "Courier New", monospace; letter-spacing: .6px; margin-top: 3px; color: #222; }
+.agency .chk { margin-top: 8px; border: 1px solid #777; padding: 5px 9px; }
+.agency .si { margin-top: 8px; border: 2px solid #1b2f6b; background: #f4f6fb; padding: 6px 10px; }
+
+</style></head>
+<body>
+
+<!-- =========================== CASE FILE (1/2) =========================== -->
+<section class="page cf" style="--z:1.095">
+<div class="tag">CASE FILE <small>1/2</small></div>
+<div class="head"><div class="badge">GOA<br>POLICE</div>
+  <div><b>North Goa Police</b><span>Preliminary brief · 8 November 2026 · Distribution: all teams</span></div></div>
+<h1>CASE FILE</h1>
+<div class="sub">The death of Aryan Vardhan, Assagao, North Goa</div>
+
+<p><b>Deceased:</b> Aryan Vardhan, 45, Managing Director and CEO of Vardhan Industries, a shipping and logistics group founded by his father, Devraj Vardhan.</p>
+<p><b>Incident:</b> On the night of Saturday 7 November, the Vardhan family hosted the company's Founders' Day party at their estate in Assagao, North Goa, with about 120 guests.</p>
+
+<table class="tl">
+<tr><td>10:30 PM</td><td>A caterer sees Aryan walk alone to the outhouse study at the back of the grounds and go inside.</td></tr>
+<tr><td>11:15 PM</td><td>A gardener sees Aryan's son, Rohan, near the outhouse.</td></tr>
+<tr><td>11:40 PM</td><td>Guests notice the outhouse on fire.</td></tr>
+<tr><td>11:55 PM</td><td>The fire brigade arrives. The door is found bolted from the inside. The rear window's wooden shutters are closed but unlatched.</td></tr>
+<tr><td>12:30 AM</td><td>A body is recovered from the study.</td></tr>
+<tr><td>8 Nov, 9:00 AM</td><td>After the post-mortem, the family physician, Dr. Anand Rao, formally identifies the remains as Aryan Vardhan.</td></tr>
+</table>
+
+<p style="margin-top:7px"><b>Status:</b> Treated as murder. Nobody at the party has a complete alibi between 10:30 and 11:40 PM. At the family's request, the remains are to be cremated on 9 November.</p>
+
+<h2>Persons of interest</h2>
+<table>
+<tr><th style="width:24%">Name</th><th style="width:30%">Who they are</th><th>What police know</th></tr>
+<tr><td><b>Kabir Vardhan</b>, 41</td><td>Younger brother, director</td><td>Passed over for CEO when their father retired. Argued with Aryan at the party</td></tr>
+<tr><td><b>Naina Vardhan</b>, 43</td><td>Wife</td><td>Left the party for about 40 minutes around 11 PM; says she had a headache</td></tr>
+<tr><td><b>Rohan Vardhan</b>, 19</td><td>Son</td><td>Seen near the outhouse at 11:15 PM. Recently not on speaking terms with his father</td></tr>
+<tr><td><b>Tara Mehra</b>, 38</td><td>Chief Financial Officer</td><td>Worked closely with Aryan for six years. Left the party early</td></tr>
+<tr><td><b>Dr. Anand Rao</b>, 71</td><td>Family physician for over 40 years</td><td>Attended the party</td></tr>
+<tr><td><b>Vikram Sethi</b>, 52</td><td>Financier, Big Mishra Fund</td><td>Not invited, but his car was logged at the estate gate at 9:50 PM</td></tr>
+<tr><td><b>Sumitra Vardhan</b>, 68</td><td>Mother</td><td>Collapsed on hearing the news; under Dr. Rao's care</td></tr>
+</table>
+<p style="margin-top:6px">Devraj Vardhan, 74, the founder, is retired and in poor health. He is not a suspect.</p>
+
+<h2>The exhibits</h2>
+<p>There are twelve exhibits. Every team can see each exhibit's title and a one-line description of what it contains on the website at any time, and can open any exhibit to read it in full. Every exhibit your team opens counts: the winner is the team with a correct answer that opened the fewest. Work only with your own team.</p>
+<div class="foot"><span>NGP/Brief/411/2026</span><span>The Vardhan Case</span><span>Page 1 of 2</span></div>
+</section>
+
+<!-- =========================== CASE FILE (2/2) =========================== -->
+<section class="page cf" style="--z:1.03">
+<div class="tag">CASE FILE <small>2/2</small></div>
+<h2 style="margin-top:4px">Your answer</h2>
+<div class="ans">
+<p>Submit once per team, on the website. Of the correct answers, the one whose team opened the fewest different exhibits wins; if two teams opened the same number, the earlier submission wins. Work only with your own team: a team that shares or copies is disqualified.</p>
+<ol>
+<li>What happened, and who was involved?</li>
+<li>Why did it happen?</li>
+<li>Where is the person responsible now headed, and how?</li>
+</ol>
+<p>Be specific: name people, places, dates and times, and say which facts prove each point. Commit to one answer for each point ("most likely" is fine). A vague answer, or one that gets a main point wrong (who did it, who is dead, who helped), is judged wrong. You won't be able to prove every last detail (some things are never answered in the exhibits); a correct answer gets the whole main story right. A point without the fact that proves it doesn't count. If no answer is fully correct, the one that gets the most right wins. After you submit, don't discuss the case outside your team until the reveal.</p>
+</div>
+
+<h2>Places in the exhibits</h2>
+<div class="gl">
+<p><b>Assagao:</b> the North Goa village where the Vardhan estate is. Its mobile tower serves the estate.</p>
+<p><b>Siolim:</b> a village on the Chapora river, about 3 km from the estate.</p>
+<p><b>Mapusa:</b> North Goa's main town, about 7 km from the estate. Dr. Rao's clinic is here.</p>
+<p><b>Anjuna:</b> a coastal village; its police station covers Assagao.</p>
+<p><b>Panjim (Panaji):</b> Goa's capital.</p>
+
+</div>
+
+<h2>Glossary</h2>
+<div class="gl">
+<p><b>Call detail record (CDR):</b> the phone company's log of a number's calls and texts, with the cell tower ("cell site") that carried each one. A phone uses a nearby tower, so the cell site shows roughly where the phone was.</p>
+<p><b>Larynx, trachea, bronchi:</b> the voice box and the airways below it, down to the lungs. A person breathing during a fire inhales soot into them.</p>
+<p><b>Femur:</b> the thigh bone.</p>
+<p><b>Pledge:</b> to offer shares as security for a loan; if the loan is not repaid, the lender takes them.</p>
+<p><b>Managing Trustee:</b> the person who runs a family trust and votes the shares it holds.</p>
+<p><b>Nominee:</b> the person an insurance policy pays out to.</p>
+<p><b>Dhaba:</b> a roadside restaurant.</p>
+<p><b>CFO:</b> Chief Financial Officer, the company's head of finance.</p>
+<p><b>SIM:</b> the card in a mobile phone that gives it its number.</p>
+<p><b>One-way ticket:</b> a ticket out with no return journey booked.</p>
+<p><b>The board:</b> the company's board of directors, the group that oversees the company and can remove its top people.</p>
+<p><b>SEBI:</b> India's stock-market regulator.</p>
+<p><b>Halcyon:</b> Halcyon Trading, a company in the Vardhan group.</p>
+<p><b>Post-mortem:</b> the medical examination of a dead body to find out how the person died.</p>
+<p><b>Panchnama:</b> a police record of a scene or search, signed by witnesses.</p>
+<p><b>Viscera:</b> internal organs, kept for lab tests.</p>
+<p><b>IO:</b> Investigating Officer, the police officer in charge of the case.</p>
+<p><b>PS, SP:</b> police station; Superintendent of Police (a senior police officer).</p>
+<p><b>RPO:</b> Regional Passport Office, which issues passports.</p>
+<p><b>PAN:</b> India's tax ID number, printed on a PAN card.</p>
+</div>
+<div class="foot"><span>NGP/Brief/411/2026</span><span>The Vardhan Case</span><span>Page 2 of 2</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 1 (1/2): post-mortem =========================== -->
+<section class="page hosp" data-ex="1" style="--z:1.238">
+<div class="tag">EXHIBIT 1 <small>· page 1 of 2</small></div>
+<div class="head"><div class="cross"></div>
+  <div><b>District Hospital, North Goa</b><span>Department of Forensic Medicine · Mortuary Block</span></div></div>
+<div class="t"><h1>POST-MORTEM EXAMINATION REPORT</h1><div style="font-size:8pt;text-align:right">PM No. <b class="mono">1187/2026</b></div></div>
+
+<div class="sec"><div class="sh">Particulars</div>
+<table>
+<tr><td class="lbl">PM No.</td><td class="mono">1187/2026</td></tr>
+<tr><td class="lbl">Requisition</td><td>Anjuna Police Station. Inquest panchnama attached</td></tr>
+<tr><td class="lbl">Body received</td><td>8 Nov 2026, 2:10 AM. Examination 6:45 AM to 8:30 AM</td></tr>
+<tr><td class="lbl">Name as per police</td><td><b>Aryan Vardhan</b>, male, 45 (identity to be established)</td></tr>
+</table></div>
+
+<div class="sec"><div class="sh">Findings</div>
+<table>
+<tr><td class="lbl">External</td><td>Charring of the whole body. Pugilistic attitude. Heat ruptures of the skin; heat fractures of the skull.</td></tr>
+<tr><td class="lbl">Airway</td><td>Soot in the mouth and nostrils only. Larynx, trachea and bronchi: <b>no soot</b>; lining pale, not congested.</td></tr>
+<tr><td class="lbl">Skeleton (X-ray)</td><td>An old, well-healed fracture of the left thigh bone (femur), fixed with a <b>surgical steel plate and six screws</b>.</td></tr>
+<tr><td class="lbl">Effects removed</td><td>Gold signet ring, right hand; steel wristwatch, left wrist. Handed to police.</td></tr>
+<tr><td class="lbl">Identification</td><td>Dental comparison with an ante-mortem chart supplied at 4:30 AM by the family physician, Dr. A. Rao, from his own records. Consistent. Remains formally identified by Dr. Rao at 9:00 AM. Asked about the femur plate, Dr. Rao stated it was from an old injury of the deceased that he had treated himself.</td></tr>
+<tr><td class="lbl">Samples preserved</td><td>Blood and viscera, sent to the forensic laboratory. Reports awaited.</td></tr>
+</table></div>
+
+<div class="op"><b>OPINION:</b> No soot below the larynx, so death occurred before the fire. Cause of death reserved.</div>
+
+<div class="sig" style="margin-top:28px"><div>Autopsy Surgeon</div><div>Countersigned: Head of Department</div><div>Date: 08/11/2026</div></div>
+<div class="stamp round" style="color:#0f5a3c;width:26mm;height:26mm;right:20mm;bottom:12mm;transform:rotate(-11deg);font-size:6.6pt">DISTRICT HOSPITAL<br>NORTH GOA<br><b style="font-size:8pt">FORENSIC MEDICINE</b></div>
+<div class="foot"><span>Form FM/PM-3</span><span>Viscera report to follow under separate cover</span><span>Page 1 of 2</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 1 (2/2): covering note =========================== -->
+<section class="page police memo" data-ex="1" style="--z:1.190">
+<div class="tag">EXHIBIT 1 <small>· page 2 of 2</small></div>
+<div class="head"><div class="star">★</div>
+  <div><b>Anjuna Police Station</b><span>North Goa District</span></div></div>
+<table class="mh" style="margin-top:8px">
+<tr><td>From</td><td>Investigating Officer, Anjuna Police Station</td></tr>
+<tr><td>To</td><td>Superintendent of Police, North Goa</td></tr>
+<tr><td>Date</td><td>8 Nov, 2:00 PM</td></tr>
+<tr><td>Subject</td><td><b>Covering note: post-mortem 1187/2026 (Aryan Vardhan)</b></td></tr>
+</table>
+<h1>Covering note</h1>
+<p>Registered as murder. Main line of inquiry: <b>Ms. Tara Mehra, CFO</b>.</p>
+<ol>
+<li>At 1:50 AM her phone received the text <b>"Done. As agreed."</b> from a SIM on the company's corporate plan. Call records requisitioned.</li>
+<li>A typed note signed "T." was found in the deceased's desk diary at head office: "38 crore by 30 October. To the account I gave you. Or Halcyon goes to the board and to SEBI, all of it." Beneath it, in the deceased's handwriting: <span class="hand" style="font-size:11pt">"I won't approve it. If she wants it, she'll have to put the transfer through herself."</span></li>
+<li>Company bank records: Rs 38 crore wired to a bank in Lisbon on 30 October, entered by Tara Mehra, with no approval.</li>
+<li>She holds a one-way ticket, Goa to Dubai to Lisbon, for 9 November.</li>
+<li>Anonymous male caller to the control room at 6:10 AM: "The Vardhan fire. Check the CFO. She's flying out tomorrow. Ask her about Lisbon." Trace requested.</li>
+<li>Gate register, 7 Nov:
+<table class="gate">
+<tr><th>Vehicle / visitor</th><th>In</th><th>Out</th><th>Remarks</th></tr>
+<tr><td>Dr. A. Rao's clinic van, driven by himself</td><td>3:10 PM</td><td>3:45 PM</td><td>"Medical supplies for Mrs. Sumitra Vardhan", sent round by the service road to the outhouse at his request. Mrs. Sumitra Vardhan (Aryan's mother) was at the main house all day; house staff say no supplies reached her.</td></tr>
+<tr><td>Vikram Sethi (not invited)</td><td>9:50 PM</td><td>10:20 PM</td><td>Admitted after a phone call from the house</td></tr>
+</table></li>
+</ol>
+<p style="margin-top:10px"><b>Recommendation:</b> detain Ms. Mehra before her flight. The family has asked for cremation on 9 November; no objection.</p>
+<div class="sig" style="margin-top:26px"><div>Investigating Officer</div><div>Received: Office of the SP</div><div>Crime No. 411/2026</div></div>
+<div class="stamp" style="color:#1b2f6b;right:18mm;bottom:20mm;transform:rotate(7deg);font-size:10pt">RECEIVED<small>SP NORTH GOA · 08 NOV 2026</small></div>
+<div class="foot"><span>Anjuna PS · Crime No. 411/2026</span><span>Confidential</span><span>Page 2 of 2</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 2: crime branch =========================== -->
+<section class="page police cb" data-ex="2" style="--z:1.143">
+<div class="tag">EXHIBIT 2</div>
+<div class="head"><div class="star">★</div>
+  <div><b>Goa Crime Branch</b><span>Document Fraud Cell · File CB/DF/2026/77</span></div></div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:8px">
+  <h1 style="font-size:12pt">RAID ON A DOCUMENT FORGER, PANJIM</h1>
+  <div style="font-size:8pt">Raid date <b>6 November 2026</b></div></div>
+<p style="margin:5px 0 0">Raid on a document forger's premises, Panjim, 6 November 2026. Seized: one ledger, rubber stamps of three municipal councils, blank birth-certificate forms, Rs 11.4 lakh in cash.</p>
+
+<div class="ledger">
+<div class="lh">Ledger, extract (transcribed)</div>
+<table class="lg">
+<tr><th style="width:11%">Month</th><th>Work</th><th style="width:15%">Name on document</th><th style="width:11%">Fee</th><th style="width:16%">Introduced by</th><th style="width:13%">Client contact</th></tr>
+<tr><td class="m">July 2026</td><td>Driving licence, date of issue backdated</td><td>S. Gaonkar</td><td class="fee">Rs 18,000</td><td>Walk-in</td><td>Mobile ending 7316</td></tr>
+<tr><td class="m">August 2026</td><td>BCom degree certificate</td><td>R. Kamat</td><td class="fee">Rs 45,000</td><td>Walk-in</td><td>Mobile ending 2058</td></tr>
+<tr><td class="m">September 2026</td><td>Indian passport. Genuine booklet, issued on forged supporting papers (birth certificate, address proof). Date of birth on the passport: 14 March 1981</td><td class="mono">ARVIND MENON</td><td>Rs 6 lakh, cash</td><td>M. Pinto, loan broker, formerly with Big Mishra Fund</td><td>Mobile ending 4471</td></tr>
+<tr><td class="m">October 2026</td><td>Income certificate</td><td>A. Shaikh</td><td class="fee">Rs 12,000</td><td>M. Pinto</td><td>Mobile ending 9183</td></tr>
+</table>
+<div class="mg">
+  <div class="pencil">Margin, September entry: "Came alone. Paid cash, no haggling. Wants it before November. Rang him on 4471 when it was ready; he answered himself and collected it."</div>
+  <div class="torn">Photograph page for this entry: torn out.</div>
+</div>
+</div>
+
+<div class="sec"><div class="sh">Follow-up, 8 November</div>
+<div class="note"><ol class="f">
+<li>Regional Passport Office (RPO), Panaji, confirms the MENON passport: a real passport, issued September 2026, but the birth certificate and address proof on its file were forgeries traced to this ledger.</li>
+<li>Bureau of Immigration, check on the passport number. Booking: <b>MENON / ARVIND</b>, Mumbai to Colombo, 9 November, departs 11:40 PM. One-way, paid in cash on 2 November at a travel agency in Mapusa, Goa. Contact on the booking: mobile ending 4471.</li>
+<li>M. Pinto worked on Big Mishra Fund's recovery desk until 2025 and still collects for lenders "by whatever means". Not found at his address since 7 November.</li>
+</ol></div></div>
+
+<div class="assess"><b>Assessment, SP Crime Branch:</b> a client brought in by a Big Mishra Fund collector gets a new name in September and is booked out of the country two days after the Assagao fire (Anjuna PS, Crime No. 411/2026). Treat as a possible contract job. Copy to Anjuna PS. Ask Mumbai to stop MENON at departure.</div>
+
+<div class="stamp" style="color:#a51b1b;right:16mm;top:11mm;transform:rotate(-6deg);font-size:11pt">SEIZED<small>CRIME BRANCH · 06 NOV 2026</small></div>
+<div class="foot"><span>CB/DF/2026/77</span><span>For official use only</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 3: insurance =========================== -->
+<section class="page ins" data-ex="3" style="--z:0.914">
+<div class="tag">EXHIBIT 3</div>
+<div class="head">
+  <div class="logo">K</div>
+  <div class="co"><b>Konkan Life Insurance Co. Ltd.</b>
+    <div>Registered Office: 4th Floor, Mandovi Trade Centre, Dayanand Bandodkar Marg, Panaji, Goa 403001<br>Toll free 1800-233-0147</div></div>
+  <div class="hr">Claims Department<br>Zonal Office, Panaji</div>
+</div>
+<div class="title">
+  <div><h1>DEATH CLAIM FILE</h1><div class="conf-red">CONFIDENTIAL · FOR INTERNAL USE ONLY</div></div>
+  <div class="ref">Claim Ref. No: <b class="mono">DC/PNJ/2026/11/00384</b></div>
+</div>
+
+<div class="sec"><div class="sh">Part A · Life assured</div>
+<table>
+<tr><td class="lbl">Life assured</td><td><b>Aryan Vardhan</b>. Date of birth <b>14 March 1981</b> (as per PAN)</td></tr>
+<tr><td class="lbl">Contact numbers on file</td><td>Mobile ending <span class="mono">2290</span>; alternate mobile for policy matters, ending <b class="mono">4471</b> (added October 2026; verification call on 2 October answered by the life assured himself)</td></tr>
+<tr><td class="lbl">Nominee on both policies</td><td>Naina Vardhan (wife)</td></tr>
+</table></div>
+
+<div class="sec"><div class="sh">Part B · Policies in force</div>
+<table>
+<tr><th>Policy</th><th>Started</th><th>Sum assured</th></tr>
+<tr><td class="mono">KL-0047731, term</td><td>12 June 2019</td><td>Rs 25 crore</td></tr>
+<tr><td class="mono">KL-0981265, term</td><td>3 October 2026</td><td>Rs 25 crore</td></tr>
+</table></div>
+
+<div class="sec"><div class="sh">Part C · Medical examination for KL-0981265, 1 October 2026</div>
+<div class="note" style="padding-bottom:3px">Insurer's panel doctor; identity checked against PAN card <span class="box">✓</span><br>Height 178 cm, weight 81 kg. Blood pressure 124/80, pulse 72. ECG normal. Blood sugar, cholesterol, liver and kidney tests normal. Non-smoker; alcohol occasionally.</div>
+<table>
+<tr><th style="width:62%">Question to the life assured</th><th style="width:7%">Yes</th><th style="width:7%">No</th><th>Details</th></tr>
+<tr><td>Diabetes, high blood pressure, heart, lung or kidney disease?</td><td><span class="box"></span></td><td><span class="box">✓</span></td><td></td></tr>
+<tr><td>Any illness lasting over two weeks in the last five years?</td><td><span class="box">✓</span></td><td><span class="box"></span></td><td>Dengue, 2023, treated at home</td></tr>
+<tr><td>Ever admitted to hospital for more than five days?</td><td><span class="box"></span></td><td><span class="box">✓</span></td><td></td></tr>
+<tr><td>Any surgery or operation?</td><td><span class="box"></span></td><td><span class="box">✓</span></td><td></td></tr>
+<tr><td>Any broken bone or serious injury?</td><td><span class="box"></span></td><td><span class="box">✓</span></td><td></td></tr>
+<tr><td>Any medicines taken regularly?</td><td><span class="box"></span></td><td><span class="box">✓</span></td><td></td></tr>
+<tr><td>Any hazardous sport or occupation?</td><td><span class="box"></span></td><td><span class="box">✓</span></td><td></td></tr>
+<tr><td><b>Examiner:</b> scars, identification marks or deformities</td><td colspan="3">None seen. No old fractures; no surgical scars on either leg</td></tr>
+</table></div>
+
+<div class="sec"><div class="sh">Part D · Claim intimation</div>
+<div class="note">By the nominee, by telephone, 8 November 2026, 9:15 AM. "Burns. Police treating it as murder."</div></div>
+
+<div class="sec"><div class="sh">Part E · Claim investigator's background check, 9 November</div>
+<div class="note">
+<ul class="f">
+<li>Mr. Vardhan took a <b>Rs 360 crore</b> loan from Big Mishra Fund on his personal guarantee and, as Managing Trustee, pledged the family trust's <b>62%</b> stake in Vardhan Industries against it. Repayable in full on <b>30 November 2026</b>.</li>
+<li>A DNA report dated 2 September 2026 found he is not Devraj Vardhan's son. Under the trust deed only Devraj's blood descendants may be Managing Trustee. On 4 November his brother Kabir's lawyers gave formal notice that they want him removed; the board votes on his removal on 21 November.</li>
+<li>The alternate number, 4471, was switched off when tried on 9 November.</li>
+</ul></div></div>
+
+<div class="sec"><div class="sh">Part F · Assessment</div>
+<div class="note">Early claim: death came 35 days after the second policy started. Refer for investigation before any payment. Suicide exclusion applies to KL-0981265 for 12 months.
+<div style="margin-top:6px">Remarks: <span class="hand">2nd policy 5 weeks old, Rs 50 cr total, wife rang it in at 9:15 the same morning. Look hard at the nominee. — Yashveer S.</span></div>
+</div>
+<div class="sig" style="padding:0 8px 6px;margin-top:6px"><div>Claims Officer: Yashveer S.</div><div>Claims Manager</div><div>Date: 09/11/2026</div></div>
+</div>
+
+<div class="stamp" style="color:#b3122a;top:24mm;left:88mm;transform:rotate(-7deg);font-size:10pt">EARLY CLAIM<small>REFER TO INVESTIGATION</small></div>
+<div class="foot"><span>Form CL/DC/07</span><span>Insurance is the subject matter of solicitation.</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 4: case diary =========================== -->
+<section class="page police diary" data-ex="4" style="--z:1.048">
+<div class="tag">EXHIBIT 4</div>
+<div class="head"><div class="star">★</div>
+  <div><b>Anjuna Police Station</b><span>North Goa District</span></div></div>
+<div class="dh"><span><b style="font-size:11pt">CASE DIARY</b> &nbsp;·&nbsp; Crime No. 411/2026 (Vardhan)</span><span>Inspector G. Pawar &nbsp;·&nbsp; Diary for <b>8 November</b></span></div>
+<div class="ruled"><table>
+<tr><td class="tm">12:20 AM</td><td><b>Scene.</b> Outhouse study. Door bolted from inside. Rear window: wooden shutters closed, not latched. Kerosene poured around the desk. Metal stand of a mosquito coil by the desk, with the remains of a cloth strip soaked in kerosene: the fire was set to start late, after whoever lit it had gone.</td></tr>
+<tr><td class="tm">1:45 AM</td><td>Body sent to District Hospital for post-mortem.</td></tr>
+<tr><td class="tm">4:30 AM</td><td>Dr. A. Rao, family physician for over 40 years, hands over Aryan Vardhan's dental chart "from my own records".</td></tr>
+<tr><td class="tm">8:40 AM</td><td><b>Post-mortem findings (phone).</b> No soot below the larynx: dead before the fire. X-ray: old healed fracture of the left femur with a steel plate and six screws. Teeth match the dental chart Dr. Rao supplied.</td></tr>
+<tr><td class="tm">9:00 AM</td><td>Dr. Rao formally identifies the remains. "I have looked after him since the day he was born." Asked about the plate in the femur: "An old injury of his. I treated it myself." He asks for an early cremation for the family's sake.</td></tr>
+<tr><td class="tm">10:15 AM</td><td><b>Rohan Vardhan (19), son.</b> Went to the outhouse at about 11:15 PM "to have it out with Dad" over his father's affair. Door bolted; knocked and shouted; no answer; went back to the party. Admits texting his father "I wish you were dead" last week. No alibi 11:15 to 11:40 PM.</td></tr>
+<tr><td class="tm">11:00 AM</td><td><b>Gate register, 7 Nov.</b> Dr. A. Rao's clinic van, driven by himself, in 3:10 PM, out 3:45 PM: "medical supplies for Mrs. Sumitra Vardhan", sent round by the service road to the outhouse at his request. Mrs. Sumitra Vardhan (Aryan's mother) was at the main house all day; house staff say no supplies reached her. Vikram Sethi (not invited) in 9:50 PM, out 10:20 PM, admitted after a phone call from the house.</td></tr>
+<tr><td class="tm">12:30 PM</td><td><b>Lines of inquiry.</b>
+<ol>
+<li>Rohan Vardhan: motive, threat, at the door with no alibi.</li>
+<li>Ms. Tara Mehra, CFO, the deceased's lover. At 1:50 AM her phone received "Done. As agreed." from a SIM on the company's corporate plan (call records requisitioned). Her typed note found in the deceased's desk diary: "38 crore by 30 October. To the account I gave you. Or Halcyon goes to the board and to SEBI, all of it. — T." Beneath it, in the deceased's hand: "I won't approve it. If she wants it, she'll have to put the transfer through herself." Rs 38 crore wired to Lisbon on 30 October, entered by her, unapproved. One-way ticket Goa to Dubai to Lisbon, 9 November.</li>
+<li>Anonymous male caller, control room, 6:10 AM: "The Vardhan fire. Check the CFO. She's flying out tomorrow. Ask her about Lisbon." Trace requested.</li>
+</ol></td></tr>
+<tr><td class="tm">2:00 PM</td><td>Mrs. Naina Vardhan and Dr. Rao apply to the magistrate for release of the body for cremation on 9 November.</td></tr>
+</table></div>
+<div class="sig" style="margin-top:14px"><div>Inspector G. Pawar, Investigating Officer</div><div>Seen: SDPO Mapusa</div><div>Diary page 3</div></div>
+<div class="foot"><span>Anjuna PS · Case diary · Crime No. 411/2026</span><span>Confidential</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 5: clinic =========================== -->
+<section class="page clinic" data-ex="5" style="--z:1.238">
+<div class="tag">EXHIBIT 5</div>
+<div class="rx">℞</div>
+<div class="head"><b>Dr. Anand Rao, MD</b><span>PRIVATE CLINIC · MAPUSA, GOA</span></div>
+<div style="text-align:center;font:bold 9pt Arial;letter-spacing:2px;margin-top:8px;color:#6b2d5c">PATIENT RECORD</div>
+
+<div class="card"><table>
+<tr><td class="lbl">Patient</td><td><b>Aryan Vardhan</b>. Born 14 March 1981</td></tr>
+<tr><td class="lbl">Contact</td><td>Mobile ending <b class="mono">4471</b> ONLY. Do not call his other number (patient's request, September). He keeps 4471 on him and always answers it himself</td></tr>
+<tr><td class="lbl">Past history</td><td>No surgery or fractures, ever. No hospital admissions. Measles and chickenpox as a child. Dengue in 2023, managed at home. Seasonal hay fever</td></tr>
+<tr><td class="lbl">Allergies</td><td>Dust (hay fever). No drug allergies</td></tr>
+<tr><td class="lbl">Vaccinations</td><td>Up to date. Typhoid booster 2024</td></tr>
+<tr><td class="lbl">Last check-up</td><td>June 2026. BP 122/80, weight 80 kg, bloods normal. Advised more exercise</td></tr>
+</table></div>
+
+<div class="notes">
+<div class="nh">Consultation notes (Dr. Rao's handwriting)</div>
+<p class="hand"><span class="d">2 Sept, 9:00 PM.</span> Came straight from the office with a DNA report from Kabir's laboratory: Devraj excluded as his father. Shaking. Asked if a laboratory can be wrong. I told him the truth: he is my son, not Devraj's. Sumitra and I have kept this secret for 45 years. I promised Sumitra I would never refuse Aryan anything.</p>
+<p class="hand"><span class="d">21 Oct, after hours.</span> Not sleeping. "Sethi wants his Rs 360 crore by 30 November. If the trust's 62% he pledged for it goes, it all goes." Kabir's lawyers are preparing to remove him as Managing Trustee: only Devraj's blood can hold it. Rx midazolam 7.5 mg, 10 tablets.</p>
+<p class="hand"><span class="d">24 Oct, 28 Oct, after hours.</span> Long talks. He has made up his mind.</p>
+<p class="hand"><span class="d">31 Oct, after hours.</span> Went over everything again. He wants the clinic van on the 7th. I will not refuse him.</p>
+<p class="hand"><span class="d">4 Nov.</span> Removal notice served on him today. Board vote on 21 November. Sethi has refused any more time.</p>
+</div>
+
+<div style="margin-top:10px;font-size:9pt;border-top:1px dashed #b89aae;padding-top:5px"><b>Bills:</b> none raised for October.</div>
+<div class="stamp" style="color:#6b2d5c;right:18mm;bottom:20mm;transform:rotate(-6deg);font-size:10pt">CONFIDENTIAL<small>DO NOT REMOVE FROM CLINIC</small></div>
+<div class="foot"><span>Patient file no. AV/1981</span><span>Dr. Anand Rao, MD · Mapusa</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 6: CDR =========================== -->
+<section class="page cdr6" data-ex="6" style="--z:1.086">
+<div class="tag" style="font-family:Arial">EXHIBIT 6</div>
+<div class="head"><b>sagar<i>mobile</i></b><span>Sagar Mobile Ltd. · Law Enforcement Cell<br>Nodal Office, Panaji</span></div>
+<h1>CALL DETAIL RECORD</h1>
+<table class="kv">
+<tr><td>Supplied to</td><td>Anjuna Police, under requisition ANJ/411/2026 dated 8 November 2026</td></tr>
+<tr><td>Number</td><td>ending <b>4471</b>, postpaid, active since March 2021</td></tr>
+<tr><td>Subscriber</td><td>Vardhan Industries Ltd, Finance Department corporate plan (account VIL-FIN, 14 numbers)</td></tr>
+<tr><td>Authorised signatory</td><td>Tara Mehra, CFO</td></tr>
+<tr><td>User</td><td>not recorded</td></tr>
+<tr><td>Period requested</td><td>7 Nov, 8:00 PM to 8 Nov, 8:00 AM</td></tr>
+</table>
+<table class="grid">
+<tr><th style="width:15%">When</th><th>Event</th><th style="width:15%">Other number</th><th style="width:24%">Cell site (where 4471 was)</th></tr>
+<tr><td>7 Nov, 21:05</td><td>Outgoing call, 2 min 04 s</td><td>ending 0932</td><td>Assagao village</td></tr>
+<tr><td>7 Nov, 23:20</td><td>Incoming call, rejected after 4 rings</td><td>ending 6650</td><td>Siolim, Jetty Road</td></tr>
+<tr><td>8 Nov, 01:50</td><td>Text sent</td><td>ending 0932</td><td>Mapusa, KTC bus stand</td></tr>
+<tr><td>8 Nov, 01:52</td><td>Phone switched off</td><td></td><td>Mapusa, KTC bus stand</td></tr>
+<tr><td>8 Nov, 07:32</td><td>Incoming text, not delivered (phone off)</td><td>ending 0932</td><td>none</td></tr>
+<tr><td>8 Nov, 07:33</td><td>Incoming call, not connected (phone off)</td><td>ending 0932</td><td>none</td></tr>
+</table>
+<div class="status">Status when this record was printed (8 Nov, 4:30 PM): switched off since 01:52. Nothing since except a text and a call from 0932 at 07:32 and 07:33, neither delivered.</div>
+<div class="cert">Certified under section 63, Bharatiya Sakshya Adhiniyam. Nodal officer, Sagar Mobile, Panaji.</div>
+
+<div class="pnotes pencil">
+<div class="ph">Police notes (pencil, added 8 November)</div>
+<ul>
+<li><span class="n">0932</span> is Ms. Tara Mehra's mobile. The <span class="n">01:50</span> text, as found on her handset: "Done. As agreed."</li>
+<li><span class="n">6650</span>: subscriber details asked for.</li>
+<li>The control room's <span class="n">6:10 AM</span> caller (anonymous, male, about the Vardhan fire) was traced to the landline of Hotel Sahyadri, a roadside dhaba on NH66 at Kankavli (breakfast halt for the overnight Goa–Mumbai buses).</li>
+<li><span class="n">07:32</span>, as found on her handset: Ms. Mehra texted this number "Who is this? Who has this phone?" Not delivered. At <span class="n">07:33</span> she rang it; no connection.</li>
+<li>Tara Mehra signed for this SIM, and at <span class="n">01:50</span> it texted her phone. Her accomplice? Ask her who she gave it to.</li>
+</ul></div>
+<div class="stamp round" style="color:#e05a00;width:30mm;height:30mm;right:18mm;bottom:13mm;transform:rotate(10deg);font-size:6.4pt">SAGAR MOBILE<br>NODAL OFFICER<br><b style="font-size:8pt">CERTIFIED</b><br>PANAJI</div>
+<div class="foot" style="font-family:Arial"><span>Requisition ANJ/411/2026</span><span>Computer-generated record</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 7: lender =========================== -->
+<section class="page sethi" data-ex="7" style="--z:1.076">
+<div class="tag" style="z-index:2">EXHIBIT 7</div>
+<div class="band"><b>BIG MISHRA FUND</b><span>Credit file<br>Facility SC/2025/07</span></div>
+<h1>Credit file, facility SC/2025/07</h1>
+<div class="sc">STRICTLY CONFIDENTIAL</div>
+
+<table class="facility">
+<tr><td class="lbl">Borrower</td><td><b>Aryan Vardhan</b> (born 14 March 1981), personally, as Managing Director of Vardhan Industries and Managing Trustee of the Vardhan Family Trust</td></tr>
+<tr><td class="lbl">Contact</td><td>Private line only, at the borrower's request: mobile ending <b class="mono">4471</b>. Answered by the borrower personally on every collection call</td></tr>
+<tr><td class="lbl">Amount</td><td><b>Rs 360 crore</b>, drawn in three tranches, July 2025 to June 2026</td></tr>
+<tr><td class="lbl">Security</td><td>Pledge of the Trust's <b>62%</b> stake in Vardhan Industries (the trust deed allows the Managing Trustee to pledge)</td></tr>
+<tr><td class="lbl">Repayment</td><td>In full, <b>30 November 2026</b>. Three extensions already given</td></tr>
+</table>
+
+<h2>Monitoring checklist, October 2026</h2>
+<table class="log chk">
+<tr><td>Quarterly accounts, Vardhan Industries</td><td>Received 14 October</td></tr>
+<tr><td>Pledge of the 62% registered with the depository</td><td>Confirmed</td></tr>
+<tr><td>Interest, July to September quarter</td><td>Paid 11 days late</td></tr>
+<tr><td>Key-man medical, annual renewal</td><td>Done 5 October 2026 (see below)</td></tr>
+<tr><td>KYC refresh</td><td>Done</td></tr>
+</table>
+
+<h2>Key-man medical, 5 October 2026</h2>
+<p>Our panel doctor: fit. BP, ECG and bloods normal. No surgical history, no fractures, no surgical scars on either leg.</p>
+<h2>Where the money went</h2>
+<p>Paid into Halcyon Trading Pvt Ltd, a group company kept off the consolidated books, for commodity derivatives trading. Every trade approved under the borrower's own code, AV-01. Net losses about Rs 310 crore.</p>
+
+<h2>Risk note, 5 November</h2>
+<p>A DNA report of 2 September found the borrower is not Devraj Vardhan's son. Kabir Vardhan's lawyers have given formal notice that they want him removed as Managing Trustee; the board votes on his removal on 21 November. Our pledge was made by a serving trustee and stands either way.</p>
+
+<h2>Collection notes</h2>
+<table class="log">
+<tr><td>28 Oct</td><td>Vikram Sethi to borrower: "Three extensions. No more."</td></tr>
+<tr><td>5 Nov</td><td>Vikram Sethi to borrower: "Don't hide behind your family. Dead or alive, the 62 percent comes to me on the 30th."</td></tr>
+<tr><td>7 Nov, 4:00 PM</td><td>Borrower phoned Vikram Sethi: "Come tonight. I'll have something for you on the 62%." Vikram Sethi to attend the Vardhan party; the gate has been told to let him in.</td></tr>
+<tr><td>9 Nov</td><td>Borrower's private line 4471 switched off since the night of the 7th. File to legal.</td></tr>
+</table>
+<div class="foot"><span>SC/2025/07 · Credit Committee copy</span><span>Not for circulation outside Big Mishra Fund</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 8: magistrate =========================== -->
+<section class="page mag" data-ex="8" style="--z:1.143">
+<div class="tag" style="font-family:Arial">EXHIBIT 8</div>
+<div class="head"><b>Office of the Executive Magistrate, Bardez</b><div style="font-size:9pt">Mapusa, North Goa</div></div>
+<div class="no"><span>Order No. <b>EM/BDZ/2026/1102</b></span><span>8 November 2026, 5:30 PM</span></div>
+<h1>ORDER</h1>
+<p>Application by Mrs. Naina Vardhan (wife) and Dr. A. Rao (family physician) for release of the remains of Aryan Vardhan for cremation on 9 November, "to spare the family further distress".</p>
+<p style="margin-top:8px"><b>Considered</b></p>
+<ol>
+<li>(a)&nbsp;&nbsp;Post-mortem 1187/2026: death before the fire (no soot below the larynx). X-ray: old, healed fracture of the left femur with a steel plate and six screws. Identity established by dental comparison with a chart supplied by Dr. A. Rao. Formal identification by Dr. Rao at 9:00 AM; he confirmed the femur plate as an old injury of the deceased that he had treated. Blood and viscera preserved; further tests not considered necessary for release.</li>
+<li>(b)&nbsp;&nbsp;Gate register, 7 Nov: Dr. A. Rao's clinic van, driven by himself, 3:10 to 3:45 PM, "medical supplies for Mrs. Sumitra Vardhan", sent by the service road to the outhouse at his request. Mrs. Sumitra Vardhan (Aryan's mother) was at the main house all day; house staff say no supplies reached her. Vikram Sethi, not invited, 9:50 to 10:20 PM.</li>
+<li>(c)&nbsp;&nbsp;Police report: the inquiry is directed at Ms. Tara Mehra, CFO. Her phone received "Done. As agreed." at 1:50 AM from a SIM on the company's corporate plan. Her typed note, found in the deceased's desk diary, demanded "38 crore by 30 October ... or Halcyon goes to the board and to SEBI"; beneath it, in the deceased's hand: "I won't approve it. If she wants it, she'll have to put the transfer through herself." Rs 38 crore was wired to Lisbon on 30 October, entered by her without approval. She holds a one-way ticket to Lisbon for 9 November. An anonymous caller at 6:10 AM told police: "Check the CFO. She's flying out tomorrow. Ask her about Lisbon."</li>
+</ol>
+<div class="order"><b>Order:</b> the remains are released to Mrs. Naina Vardhan. Cremation permitted on 9 November at 11:00 AM.</div>
+<div class="signblk">Sd/-<br><b>Executive Magistrate, Bardez</b></div>
+<div style="margin-top:16px;font-size:9.5pt"><i>Clerk's margin note:</i> <span class="hand" style="font-size:11pt">"Mrs. Naina Vardhan asked twice whether the death certificate could be issued today, for the insurance."</span></div>
+<div class="stamp round" style="color:#2140a0;width:26mm;height:26mm;right:10mm;bottom:11mm;transform:rotate(-12deg);font-size:6.6pt">EXECUTIVE<br>MAGISTRATE<br><b style="font-size:8pt">BARDEZ</b><br>GOA</div>
+<div class="foot" style="font-family:Arial"><span>EM/BDZ/2026/1102</span><span>Certified true copy</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 9: airport =========================== -->
+<section class="page air" data-ex="9" style="--z:1.238">
+<div class="tag">EXHIBIT 9</div>
+<div class="head"><div><b>Mumbai Airport Police</b><span>Lookout and immigration liaison</span></div><div class="plane">✈</div></div>
+<div class="banner">LOOKOUT EXTRACT<span>9 NOVEMBER 2026, 2:00 PM</span></div>
+<p style="margin:8px 0 4px">Request from Goa Police (Anjuna PS) after the Assagao homicide: stop their person of interest, Ms. Tara Mehra, who moved Rs 38 crore to Lisbon on 30 October, and find anyone travelling with or for her. Search run on one-way international bookings for 9 November bought in Goa between 30 October and 3 November. Three matches.</p>
+
+<div class="slips">
+<div class="slip stop"><div class="no">MATCH 1</div><div class="nm">MEHRA / TARA MS</div>
+<p>Goa to Dubai to Lisbon, 9 Nov.</p><p>Booked 31 Oct on her own credit card.</p><p>Contact: mobile ending <span class="mono">0932</span>.</p><p>Person of interest, Goa case.</p><div class="res">STOP</div></div>
+<div class="slip stop"><div class="no">MATCH 2</div><div class="nm">MENON / ARVIND MR</div>
+<p>Mumbai to Colombo, 9 Nov, departs 11:40 PM.</p><p>One-way, no checked baggage.</p><p>Paid in cash on 2 Nov at a travel agency in Mapusa, Goa.</p><p>Contact: mobile ending <span class="mono">4471</span>; the agency's confirmation call on 3 Nov was answered by the passenger himself.</p><div class="res">STOP</div></div>
+<div class="slip ok"><div class="no">MATCH 3</div><div class="nm">S / VAIBHAV MR</div>
+<p>Goa to Doha, 9 Nov.</p><p>Cash, 1 Nov.</p><p>Seafarer joining a vessel; papers verified.</p><div class="res">CLEARED</div></div>
+</div>
+
+<div class="sec"><div class="sh">Travel document, MENON</div>
+<div class="note">Indian passport, date of birth 14 March 1981. Goa Crime Branch reports it was obtained in September 2026 through a Panjim document forger whose premises they raided on 6 November: a real passport, but issued on forged supporting documents.</div></div>
+
+<div class="duty"><div class="dl">Duty officer's note, handwritten</div>
+<div class="hand">"Same day, two airports. She books on the 31st, he books two days later, both <span style="white-space:nowrap">one-way</span>, both bought in Goa. They can't be seen leaving together, so he goes from Mumbai on a bought passport. He is travelling for her."</div></div>
+
+<div class="action">Action: stop both at departure. Hold MENON for Goa Police as an associate of MEHRA.</div>
+<div class="stamp" style="color:#b3122a;right:18mm;bottom:22mm;transform:rotate(-7deg);font-size:12pt">STOP AT DEPARTURE<small>CIRCULATED 09 NOV 2026</small></div>
+<div class="foot"><span>MAP/LOC/2026/1108</span><span>Restricted · law enforcement only</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 10: cyber crime examination report =========================== -->
+<section class="page police cyb" data-ex="10" style="--z:1.048">
+<div class="tag">EXHIBIT 10</div>
+<div class="head"><div class="star">★</div>
+  <div><b>Cyber Crime Police Station</b><span>Goa Police · Panjim · Digital forensics unit</span></div></div>
+<div class="t"><h1>EXAMINATION REPORT</h1><div>No. <b class="mono">CCPS/EXM/219/2026</b><br>9 November 2026</div></div>
+<div class="ref">Referred by the Investigating Officer, Anjuna Police Station, Crime No. 411/2026. Examining officer: SI A. Singh. Window examined: <b>7 Nov, 6:00 PM to 8 Nov, 10:00 AM.</b></div>
+
+<div class="sec"><div class="sh">Item 1. Handset seized from Ms. Tara Mehra, CFO (her mobile, ending 0932) <small>· Seized 8 Nov, 10:00 AM, under seal. Seal intact. Full extraction.</small></div>
+<table class="ex">
+<tr><th>Time</th><th>On the handset</th></tr>
+<tr><td class="tm">7 Nov, 9:05 PM</td><td>Incoming call from ending <b class="mono">4471</b> (not saved in contacts), 2 min 04 s</td></tr>
+<tr><td class="tm">7 Nov, 10:58 PM</td><td>WhatsApp from contact "Naina V.":<span class="bub">"I know about the two of you. I won't be the fool any more. I'll end it myself, tonight."</span><span class="meta">Read 11:02 PM. No reply</span></td></tr>
+<tr><td class="tm">8 Nov, 1:50 AM</td><td>SMS from ending <b class="mono">4471</b>:<span class="bub sms">"Done. As agreed."</span><span class="meta">Opened 7:31 AM. No reply</span></td></tr>
+<tr><td class="tm">8 Nov, 7:32 AM</td><td>SMS to ending <b class="mono">4471</b>:<span class="bub sms">"Who is this? Who has this phone?"</span><span class="meta">Not delivered</span></td></tr>
+<tr><td class="tm">8 Nov, 7:33 AM</td><td>Outgoing call to ending <b class="mono">4471</b>: not connected, number switched off</td></tr>
+</table>
+<div class="note" style="border-top:1px solid #aaa">Nothing deleted within the window.</div></div>
+
+<div class="sec"><div class="sh">Item 2. Number ending 4471 (operator data, Sagar Mobile)</div>
+<div class="note"><p>Subscriber: Vardhan Industries Ltd, Finance Department corporate plan. Authorised signatory: Tara Mehra, CFO. User not recorded.</p>
+<p>In the window the number used three cell sites: Assagao village, for the 9:05 PM call to 0932; Siolim, Jetty Road, at 11:20 PM, when an incoming call from ending 6650 was rejected after 4 rings; and Mapusa, KTC bus stand, for the 1:50 AM text to 0932. Switched off there at 1:52 AM. Nothing since except a text and a call from 0932 at 7:32 and 7:33 AM, neither delivered.</p></div></div>
+
+<div class="sec"><div class="sh">Item 3. Control room call, 8 Nov, 6:10 AM</div>
+<div class="note">Anonymous male caller about the Vardhan fire, 41 seconds. Traced to the landline of Hotel Sahyadri, a roadside dhaba on NH66 at Kankavli where overnight buses from Goa to Mumbai stop. On the recording: road traffic, an engine idling. No voice sample available for comparison.</div></div>
+
+<div class="ofnote"><b>Of note for the IO:</b> the 10:58 PM message is from <b>Mrs. Naina Vardhan</b>, wife of the deceased. Her family say she left the party at about 11 PM for some 40 minutes. Recommend she be questioned.</div>
+
+<div class="hash">Extraction image hash (SHA-256): 9c41e07a 5b2f88d1 03aa6c47 e9d2b310 7f6e58c2 aa04d91b 6e3f20c8 d71b5a94 · Working copy only; original retained under seal.</div>
+<div class="sig" style="margin-top:18px"><div>SI A. Singh, Examiner, Digital Forensics</div><div>Inspector, Cyber Crime PS</div><div>To: IO, Anjuna PS</div></div>
+<div class="stamp" style="color:#0e5e6f;right:18mm;bottom:13mm;transform:rotate(-7deg);font-size:10pt">EXAMINED<small>CYBER CRIME PS · 09 NOV 2026</small></div>
+<div class="foot"><span>CCPS/EXM/219/2026</span><span>For official use only</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 11: travel agency =========================== -->
+<section class="page police agency" data-ex="11" style="--z:1.105">
+<div class="tag">EXHIBIT 11</div>
+<div class="head"><div class="star">★</div>
+  <div><b>Mapusa Police Station</b><span>North Goa District · Seizure memo (panchnama)</span></div></div>
+<div class="t"><h1>SEIZURE MEMO</h1><div style="font-size:8.4pt"><b>9 November 2026, 11:30 AM</b></div></div>
+<p class="intro">At Shanti Tours &amp; Travels, Municipal Market Road, Mapusa, on a request from Goa Crime Branch (file CB/DF/2026/77), before two panch witnesses and the proprietor, Mr. Samyak P. Seized:</p>
+
+<div class="item">1. Day book, page for 2 November 2026</div>
+<div class="day">
+<div class="dbh"><span>SHANTI TOURS &amp; TRAVELS · DAY BOOK</span><span>Date: 2 November 2026</span></div>
+<table>
+<tr><th style="width:9%">Time</th><th style="width:21%">Passenger</th><th>Sector</th><th style="width:11%">Paid</th><th style="width:16%">Booked by</th><th style="width:14%">Contact</th></tr>
+<tr><td>10:15 AM</td><td class="hand">PAI / SUNIL MR</td><td class="hand">Goa to Delhi, 14 Nov, return</td><td>UPI</td><td>Walk-in</td><td>Mobile ending 5527</td></tr>
+<tr><td>11:05 AM</td><td class="hand">DESAI / NIKHIL MR</td><td class="hand">Goa to Mumbai, 9 Nov, 2:15 PM</td><td>Big Mishra Fund account</td><td>Phone, Big Mishra Fund Panjim office</td><td>Office</td></tr>
+<tr><td>11:50 AM</td><td class="hand">MENON / ARVIND MR</td><td class="hand">Mumbai to Colombo, 9 Nov, departs 11:40 PM. One-way</td><td>Cash</td><td>Walk-in</td><td>Mobile ending 4471</td></tr>
+<tr><td>12:30 PM</td><td class="hand">DIAS / ANITA MS + 3</td><td class="hand">Goa to Bengaluru, 20 Dec</td><td>Card</td><td>Walk-in</td><td>Mobile ending 8064</td></tr>
+</table></div>
+
+<div class="pair" style="margin-top:2px">
+<div style="flex:0 0 38%">
+<div class="item">2. Cash receipt No. 2231, 2 Nov 2026</div>
+<div class="rcpt"><div class="rh"><span>SHANTI TOURS &amp; TRAVELS</span><span>No. 2231</span></div>
+<div class="carbon">Received from Mr. Arvind Menon Rs 23,600 in cash, for a one-way ticket Mumbai to Colombo, 9 Nov.</div>
+<div style="margin-top:3px;font-size:7.8pt">Printed ticket handed over; customer gave no e-mail. Seat confirmed by phone on 3 Nov: rang 4471, the customer answered himself.</div></div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column">
+<div class="item">3. Photocopy of the passenger's passport, kept with the booking</div>
+<div class="pp" style="flex:1"><div class="ph">Photograph: too dark on the copy.</div>
+<div class="bio"><div class="rep">REPUBLIC OF INDIA · Passport No. W 7730158</div>
+<table>
+<tr><td>Surname</td><td><b>MENON</b></td></tr>
+<tr><td>Given name</td><td><b>ARVIND</b></td></tr>
+<tr><td>Sex</td><td>M</td></tr>
+<tr><td>Date of birth</td><td><b>14/03/1981</b></td></tr>
+<tr><td>Place of issue</td><td>Panaji</td></tr>
+<tr><td>Date of issue</td><td>24/09/2026</td></tr>
+</table>
+<div class="mrz">P&lt;INDMENON&lt;&lt;ARVIND&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div></div></div>
+</div>
+</div>
+
+<div class="chk"><b>Check on the passport, same day.</b> RPO Panaji: W 7730158 is a real passport, issued in September 2026, but on forged supporting documents (birth certificate, address proof) that came from the Panjim document forger raided by Goa Crime Branch on 6 November. Revocation proposed; Bureau of Immigration informed.</div>
+
+<div class="si"><b>Note, SI, Mapusa PS:</b> the entry above MENON's on the same page is N. Desai, Goa to Mumbai, 9 Nov, booked by phone from Big Mishra Fund's Panjim office on its account. The proprietor says Big Mishra Fund's office often sends someone in with cash to buy tickets for "their men". Desai lands in Mumbai on the afternoon of the 9th; MENON leaves Mumbai at 11:40 PM the same night. Inform Crime Branch: possible Big Mishra Fund arrangement.</div>
+
+<div class="sig"><div>Panch witness 1</div><div>Panch witness 2</div><div>SI, Mapusa PS</div></div>
+<div class="stamp round" style="color:#1b2f6b;width:23mm;height:23mm;right:26mm;bottom:15mm;transform:rotate(-10deg);font-size:6.2pt">MAPUSA<br>POLICE STATION<br><b style="font-size:7.6pt">SEIZED</b><br>NORTH GOA</div>
+<div class="foot"><span>Mapusa PS · Seizure memo · 9 Nov 2026</span><span>Copy to Crime Branch, CB/DF/2026/77</span><span>Page 1 of 1</span></div>
+</section>
+
+<!-- =========================== EXHIBIT 12: control room log =========================== -->
+<section class="page ctl" data-ex="12" style="--z:1.105">
+<div class="tag" style="z-index:2">EXHIBIT 12</div>
+<div class="band"><div><b>North Goa Police Control Room</b><span>Panjim · Emergency Response Support System</span></div><div class="d112">112<small>DIAL</small></div></div>
+<h1>OCCURRENCE LOG</h1>
+<div class="shift"><div><b>Shift:</b> C</div><div><b>From:</b> 7 Nov 8:00 PM</div><div><b>To:</b> 8 Nov 8:00 AM</div><div><b>Extract:</b> Anjuna PS area</div></div>
+<table class="reg">
+<tr><th>Time</th><th>Entry</th><th>Action</th></tr>
+<tr><td class="tm">7 Nov, 9:40 PM</td><td>Noise complaint: party at the Vardhan estate, Assagao. Anjuna beat informed. Music lowered by 10:05 PM</td><td class="ac">Closed</td></tr>
+<tr><td class="tm">10:26 PM</td><td>Siolim patrol, vehicle check at Siolim junction. Black SUV, Maharashtra registration, owner Big Mishra Fund. Driver and Mr. Vikram Sethi: "coming from a party at Assagao, driving back to Mumbai tonight". Not drunk. Allowed to proceed north</td><td class="ac">Closed</td></tr>
+<tr><td class="tm">11:41 PM</td><td>Fire at the outhouse, Vardhan estate, Assagao (caller: estate staff). Fire brigade Mapusa and Anjuna PS mobile sent</td><td class="ac">Fire brigade, Anjuna PS</td></tr>
+<tr><td class="tm">8 Nov, 12:34 AM</td><td>Anjuna PS: one body recovered from the study. Crime No. 411/2026</td><td class="ac">SP informed</td></tr>
+<tr><td class="tm">6:10 AM</td><td>Anonymous call, male, about the Vardhan fire. Refused to give a name; hung up after 41 seconds. Passed to IO Anjuna. Trace asked for</td><td class="ac">IO Anjuna; trace</td></tr>
+</table>
+
+<div class="trace"><div class="th">Trace register, 8 November</div>
+<div class="tr"><div class="q">Asked 6:25 AM: the 6:10 AM caller.</div>
+<div class="a">Reply 3:15 PM, telephone exchange, Kankavli: landline of Hotel Sahyadri, a roadside dhaba on NH66 at Kankavli; overnight Goa–Mumbai buses halt there for breakfast.</div></div>
+<div class="tr"><div class="q">Asked 10:40 AM: mobile ending 4471, which sent a 1:50 AM text to Ms. Tara Mehra's mobile (ending 0932). Subscriber and locations overnight.</div>
+<div class="a">Reply 12:05 PM, Sagar Mobile nodal officer: subscriber Vardhan Industries Ltd, Finance Department corporate plan; authorised signatory Tara Mehra, CFO; user not recorded. 7 Nov, 9:05 PM: outgoing call to 0932, 2 min, 4471 on cell site Assagao village. 11:20 PM: incoming call from ending 6650, rejected after 4 rings, 4471 on cell site Siolim, Jetty Road. 8 Nov, 1:50 AM: text to 0932 (per IO: "Done. As agreed."), 4471 on cell site Mapusa, KTC bus stand. Switched off 1:52 AM. 8 Nov, 7:32 and 7:33 AM: a text from 0932 (per IO, from her handset: "Who is this? Who has this phone?") and then a call failed to reach it. Live location not possible.</div></div>
+</div>
+
+<div class="remark"><div class="rh">Duty officer's remark (handwritten)</div>
+<div class="hand">"Sethi's car went north at 10:26, "driving back to Mumbai". The tip came from NH66, the Mumbai road. Circulate the vehicle to Maharashtra highway police?"</div></div>
+<div class="stamp round" style="color:#5a1f1f;width:30mm;height:30mm;right:16mm;bottom:14mm;transform:rotate(-9deg);font-size:6.4pt">NORTH GOA<br>POLICE<br><b style="font-size:8pt">CONTROL ROOM</b><br>PANJIM</div>
+<div class="foot"><span>Occurrence log · C shift · 07/08 Nov 2026</span><span>Restricted</span><span>Page 1 of 1</span></div>
+</section>
+
+<script>
+for (const p of document.querySelectorAll('.page')) if (p.scrollHeight > p.clientHeight + 1 || p.scrollWidth > p.clientWidth + 1) {
+  const d = document.createElement('div'); d.textContent = 'PAGE OVERFLOW'; d.style.cssText = 'position:absolute;top:2mm;left:4mm;color:red;font:bold 14pt Arial'; p.appendChild(d); }
+</script>
+</body></html>
